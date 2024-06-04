@@ -243,7 +243,7 @@ require('lazy').setup({
   { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
 
   { 'm4xshen/autoclose.nvim', opts = {} },
-
+  
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
   --    require('gitsigns').setup({ ... })
@@ -828,6 +828,7 @@ require('lazy').setup({
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
+
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
