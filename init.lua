@@ -161,6 +161,9 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- Set encoding
+vim.opt.encoding = 'utf-8'
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
@@ -227,7 +230,6 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -236,14 +238,29 @@ require('lazy').setup({
   --
   --  This is equivalent to:
   --    require('Comment').setup({})
-
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
 
-  { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
+  { 'ellisonleao/gruvbox.nvim', priority = 1000, config = true, opts = ... },
+
+  {
+    'Exafunction/codeium.vim',
+    event = 'BufEnter',
+  },
+
+  {
+    'chikko80/error-lens.nvim',
+    event = 'BufRead',
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+    },
+    opts = {
+      -- your options go here
+    },
+  },
 
   { 'm4xshen/autoclose.nvim', opts = {} },
-  
+
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
   --    require('gitsigns').setup({ ... })
@@ -772,6 +789,7 @@ require('lazy').setup({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
+          { name = 'codeium' },
         },
       }
     end,
@@ -779,16 +797,72 @@ require('lazy').setup({
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
-  
+
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+      'MunifTanjim/nui.nvim',
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-    }
+    },
+  },
+
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('lualine').setup {
+        options = {
+          icons_enabled = true,
+          theme = 'auto',
+          ---component_separators = { left = '', right = ''},
+          --section_separators = { left = '', right = ''},
+          component_separators = { left = '', right = '' },
+          section_separators = { left = '', right = '' },
+          disabled_filetypes = {
+            statusline = {},
+            winbar = {},
+          },
+          ignore_focus = {},
+          always_divide_middle = true,
+          globalstatus = false,
+          refresh = {
+            statusline = 1000,
+            tabline = 1000,
+            winbar = 1000,
+          },
+        },
+        sections = {
+          lualine_a = { 'mode' },
+          lualine_b = { 'branch', 'diff', 'diagnostics' },
+          lualine_c = { 'filename' },
+          lualine_x = { 'encoding', 'fileformat', 'filetype' },
+          lualine_y = { 'progress' },
+          lualine_z = { 'location' },
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { 'filename' },
+          lualine_x = { 'location' },
+          lualine_y = {},
+          lualine_z = {},
+        },
+        tabline = {
+          lualine_a = { 'buffers' },
+          lualine_b = { 'branch' },
+          lualine_c = { 'filename' },
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = { 'tabs' },
+        },
+        winbar = {},
+        inactive_winbar = {},
+        extensions = {},
+      }
+    end,
   },
 
   { -- Collection of various small independent plugins/modules
@@ -812,17 +886,17 @@ require('lazy').setup({
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
+      --local statusline = require 'mini.statusline'
       -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
+      --statusline.setup { use_icons = vim.g.have_nerd_font }
 
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for
       -- cursor location to LINE:COLUMN
       ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
+      --statusline.section_location = function()
+      --return '%2l:%-2v'
+      --end
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
@@ -833,16 +907,16 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 
-        'bash', 
-        'c', 
-        'diff', 
-        'html', 
-        'lua', 
-        'luadoc', 
-        'markdown', 
-        'vim', 
-        'vimdoc', 
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'vim',
+        'vimdoc',
         'javascript',
         'typescript',
         'css',
@@ -853,7 +927,7 @@ require('lazy').setup({
         'rust',
         'cpp',
         'java',
-        'vue'
+        'vue',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
@@ -927,10 +1001,9 @@ require('lazy').setup({
   },
 })
 
+vim.o.background = 'dark' -- or "light" for light mode
+vim.cmd [[colorscheme gruvbox]]
 
-vim.o.background = "dark" -- or "light" for light mode
-vim.cmd([[colorscheme gruvbox]])
-
-vim.cmd('Neotree')
+vim.cmd 'Neotree'
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
