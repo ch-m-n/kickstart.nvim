@@ -241,7 +241,21 @@ require('lazy').setup({
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
 
-  { 'ellisonleao/gruvbox.nvim', priority = 1000, config = true, opts = ... },
+  -- { 'ellisonleao/gruvbox.nvim', priority = 1000, config = true, opts = ... },
+
+  {
+    'Shatur/neovim-ayu',
+    config = function()
+      require('ayu').setup {
+        mirage = false,
+        terminal = true,
+        overrides = {},
+      }
+
+      --vim.o.background = 'light'
+      require('ayu').colorscheme()
+    end,
+  },
 
   {
     'Exafunction/codeium.vim',
@@ -852,8 +866,8 @@ require('lazy').setup({
         },
         tabline = {
           lualine_a = { 'buffers' },
-          lualine_b = { 'branch' },
-          lualine_c = { 'filename' },
+          lualine_b = {},
+          lualine_c = {},
           lualine_x = {},
           lualine_y = {},
           lualine_z = { 'tabs' },
@@ -1001,8 +1015,8 @@ require('lazy').setup({
   },
 })
 
-vim.o.background = 'dark' -- or "light" for light mode
-vim.cmd [[colorscheme gruvbox]]
+--vim.o.background = 'dark' -- or "light" for light mode
+--vim.cmd [[colorscheme ayu]]
 
 vim.cmd 'Neotree'
 -- The line beneath this is called `modeline`. See `:help modeline`
