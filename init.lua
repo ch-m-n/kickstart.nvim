@@ -243,17 +243,30 @@ require('lazy').setup({
 
   -- { 'ellisonleao/gruvbox.nvim', priority = 1000, config = true, opts = ... },
 
-  {
-    'Shatur/neovim-ayu',
-    config = function()
-      require('ayu').setup {
-        mirage = false,
-        terminal = true,
-        overrides = {},
-      }
+  --{
+  --  'Shatur/neovim-ayu',
+  --  config = function()
+  --    require('ayu').setup {
+  --      mirage = true,
+  --      terminal = true,
+  --      overrides = {},
+  --   }
 
-      --vim.o.background = 'light'
-      require('ayu').colorscheme()
+  --    vim.o.background = 'light'
+  --    require('ayu').colorscheme()
+  --  end,
+  --},
+
+  {
+    'projekt0n/github-nvim-theme',
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      require('github-theme').setup {
+        -- ...
+      }
+      --require('github-theme').colorscheme()
+      vim.cmd 'colorscheme github_light_high_contrast'
     end,
   },
 
