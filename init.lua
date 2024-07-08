@@ -243,32 +243,32 @@ require('lazy').setup({
 
   -- { 'ellisonleao/gruvbox.nvim', priority = 1000, config = true, opts = ... },
 
-  --{
-  --  'Shatur/neovim-ayu',
-  --  config = function()
-  --    require('ayu').setup {
-  --      mirage = true,
-  --      terminal = true,
-  --      overrides = {},
-  --   }
-
-  --    vim.o.background = 'light'
-  --    require('ayu').colorscheme()
-  --  end,
-  --},
-
   {
-    'projekt0n/github-nvim-theme',
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
+    'Shatur/neovim-ayu',
     config = function()
-      require('github-theme').setup {
-        -- ...
+      require('ayu').setup {
+        mirage = true,
+        terminal = true,
+        overrides = {},
       }
-      --require('github-theme').colorscheme()
-      vim.cmd 'colorscheme github_light_high_contrast'
+
+      vim.o.background = 'light'
+      require('ayu').colorscheme()
     end,
   },
+
+  --{
+  --  'projekt0n/github-nvim-theme',
+  --  lazy = false, -- make sure we load this during startup if it is your main colorscheme
+  --  priority = 1000, -- make sure to load this before all the other start plugins
+  --  config = function()
+  --    require('github-theme').setup {
+  -- ...
+  --    }
+  --require('github-theme').colorscheme()
+  --    vim.cmd 'colorscheme github_light'
+  --  end,
+  --},
 
   {
     'Exafunction/codeium.vim',
@@ -373,7 +373,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      --{ 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
