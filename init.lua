@@ -241,21 +241,53 @@ require('lazy').setup({
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
 
-  -- { 'ellisonleao/gruvbox.nvim', priority = 1000, config = true, opts = ... },
-
   {
-    'Shatur/neovim-ayu',
+    'ellisonleao/gruvbox.nvim',
     config = function()
-      require('ayu').setup {
-        mirage = true,
-        terminal = true,
+      require('gruvbox').setup {
+        terminal_colors = true, -- add neovim terminal colors
+        undercurl = true,
+        underline = true,
+        bold = true,
+        italic = {
+          strings = true,
+          emphasis = true,
+          comments = true,
+          operators = false,
+          folds = true,
+        },
+        strikethrough = true,
+        invert_selection = false,
+        invert_signs = false,
+        invert_tabline = false,
+        invert_intend_guides = false,
+        inverse = true, -- invert background for search, diffs, statuslines and errors
+        contrast = '', -- can be "hard", "soft" or empty string
+        palette_overrides = {},
         overrides = {},
+        dim_inactive = false,
+        transparent_mode = false,
       }
-
-      vim.o.background = 'light'
-      require('ayu').colorscheme()
+      vim.o.background = 'dark'
+      vim.cmd 'colorscheme gruvbox'
     end,
   },
+
+  --{
+  --  'Shatur/neovim-ayu',
+  --  config = function()
+  --    require('ayu').setup {
+  --      mirage = true,
+  --      terminal = true,
+  --      overrides = {},
+  --    }
+  --  end,
+  --},
+
+  --    vim.o.background = 'light'
+  --    require('ayu').colorscheme()
+  --  end,
+  --},
 
   --{
   --  'projekt0n/github-nvim-theme',
