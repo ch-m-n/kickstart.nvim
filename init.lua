@@ -247,7 +247,7 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       require('catppuccin').setup()
-      vim.cmd.colorscheme 'catppuccin-latte'
+      vim.cmd.colorscheme 'catppuccin-mocha'
     end,
   },
 
