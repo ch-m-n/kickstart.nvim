@@ -241,13 +241,27 @@ require('lazy').setup({
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
 
+  --{
+  --  'catppuccin/nvim',
+  --  name = 'catppuccin',
+  --  priority = 1000,
+  --  config = function()
+  --    require('catppuccin').setup()
+  --    vim.cmd.colorscheme 'catppuccin-mocha'
+  --  end,
+  --},
+  --
   {
-    'catppuccin/nvim',
-    name = 'catppuccin',
+    'sainnhe/gruvbox-material',
+    lazy = false,
     priority = 1000,
     config = function()
-      require('catppuccin').setup()
-      vim.cmd.colorscheme 'catppuccin-mocha'
+      -- Optionally configure and load the colorscheme
+      -- directly inside the plugin declaration.
+      vim.g.gruvbox_material_enable_italic = true
+      vim.g.gruvbox_material_background = 'hard'
+      vim.g.gruvbox_material_foreground = 'mix'
+      vim.cmd.colorscheme 'gruvbox-material'
     end,
   },
 
@@ -1033,6 +1047,11 @@ require('lazy').setup({
         'cpp',
         'java',
         'vue',
+        'yaml',
+        'toml',
+        'json',
+        'query',
+        'sql',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
