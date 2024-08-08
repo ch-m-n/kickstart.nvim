@@ -332,6 +332,21 @@ require('lazy').setup({
   },
 
   {
+    'OXY2DEV/markview.nvim',
+    lazy = false, -- Recommended
+    -- ft = "markdown" -- If you decide to lazy-load anyway
+
+    dependencies = {
+      -- You will not need this if you installed the
+      -- parsers manually
+      -- Or if the parsers are in your $RUNTIMEPATH
+      'nvim-treesitter/nvim-treesitter',
+
+      'nvim-tree/nvim-web-devicons',
+    },
+  },
+
+  {
     'chikko80/error-lens.nvim',
     event = 'BufRead',
     dependencies = {
@@ -339,6 +354,28 @@ require('lazy').setup({
     },
     opts = {
       -- your options go here
+      -- this setting tries to auto adjust the colors
+      -- based on the diagnostic-highlight groups and your
+      -- theme background color with a color blender
+      enabled = true,
+      auto_adjust = {
+        enable = false,
+        fallback_bg_color = nil, -- mandatory if enable true (e.g. #281478)
+        step = 7, -- inc: colors should be brighter/darker
+        total = 30, -- steps of blender
+      },
+      prefix = 4, -- distance code <-> diagnostic message
+      -- default colors
+      colors = {
+        error_fg = '#FF6363', -- diagnostic font color
+        error_bg = '#4B252C', -- diagnostic line color
+        warn_fg = '#FA973A',
+        warn_bg = '#403733',
+        info_fg = '#5B38E8',
+        info_bg = '#281478',
+        hint_fg = '#25E64B',
+        hint_bg = '#147828',
+      },
     },
   },
 
@@ -1052,6 +1089,8 @@ require('lazy').setup({
         'json',
         'query',
         'sql',
+        'markdown',
+        'markdown_inline',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
