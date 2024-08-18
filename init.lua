@@ -83,6 +83,12 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
+--
+--Set tab width
+local set = vim.opt -- set options
+set.tabstop = 4
+set.softtabstop = 4
+set.shiftwidth = 4
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -241,6 +247,23 @@ require('lazy').setup({
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
 
+  {
+    'anurag3301/nvim-platformio.lua',
+    dependencies = {
+      { 'akinsho/nvim-toggleterm.lua' },
+      { 'nvim-telescope/telescope.nvim' },
+      { 'nvim-lua/plenary.nvim' },
+    },
+    cmd = {
+      'Pioinit',
+      'Piorun',
+      'Piocmd',
+      'Piolib',
+      'Piomon',
+      'Piodebug',
+    },
+  },
+
   --{
   --  'catppuccin/nvim',
   --  name = 'catppuccin',
@@ -381,9 +404,6 @@ require('lazy').setup({
 
   { 'm4xshen/autoclose.nvim', opts = {} },
 
-  {
-    'normen/vim-pio',
-  },
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
   --    require('gitsigns').setup({ ... })
@@ -416,29 +436,6 @@ require('lazy').setup({
   -- Then, because we use the `config` key, the configuration only runs
   -- after the plugin has been loaded:
   --  config = function() ... end
-
-  { -- Useful plugin to show you pending keybinds.
-    'folke/which-key.nvim',
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-    config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup()
-
-      -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-        ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
-        ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
-      }
-      -- visual mode
-      require('which-key').register({
-        ['<leader>h'] = { 'Git [H]unk' },
-      }, { mode = 'v' })
-    end,
-  },
 
   -- NOTE: Plugins can specify dependencies.
   --
